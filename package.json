@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "fastify": "^3.27.2",
+    "socket.io": "^4.4.1"
+  }
+}
