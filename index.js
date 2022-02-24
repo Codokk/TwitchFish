@@ -6,6 +6,12 @@ const Path = require('path');
 // Declare a route
 fastify.get('/', async (req, res) => {
     res.type('text/html').send(fs.createReadStream(Path.join(__dirname + "/src/index.html")))
+});
+fastify.get("app.js", (req,res)=>{
+  res.type('text/javascript').send(fs.createReadStream(Path.join(__dirname + "/src/app.js")))
+})
+fastify.get("/classes/*", (req,res)=>{
+  res.type('text/javascript').send(fs.createReadStream(Path.join(__dirname + "/src" + req.url)))
 })
 
 // Run the server!
