@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TwitchFish!!! By Cody Krist</title>
+    <style>
+        #Main-Container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-flow: column;
+        }
+        .button {
+            cursor: pointer;
+        }
+        .StartServer {
+            font-size: 32px;
+            font-weight: bold;
+            background: red;
+            padding: 2rem;
+        }
+        .StatsRow {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgb(1, 1, 85);
+            color: rgb(212, 212, 212);
+            width: 90vw;
+            padding: 2rem;
+            margin: 1rem;
+        }
+        /* Colors */
+        .green {
+            background: green;
+            color: rgb(58, 58, 58);
+        }
+        .yellow {
+            background: yellow;
+            color: rgb(58, 58, 58);
+        }
+        .red {
+            background: red;
+            color: rgb(58, 58, 58);
+        }
+        .StatsRow > div {
+            display: flex;
+            flex-flow: column;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            padding: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <div id="Main-Container">
+        <div class="StartServer button">
+            Start Fishgame
+        </div>
+        <div class="StatsRow">
+            <div id="SQL_Server_Status" class="red">
+                SQLite Status: <div>Offline</div>
+            </div>
+            <div id="Twitch_Status" class="red">
+                Twitch Status: <div>Offline</div>
+            </div>
+            <div id="Client_Status" class="red">
+                Connected Clients: <div>0</div>
+            </div>
+            <div id="Socket_Status" class="red">
+                Socket Status: <div>Offline</div>
+            </div>
+        </div>
+    </div>
+    <script type="module" src="./server.js"></script>
+</body>
+</html>

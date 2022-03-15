@@ -9,6 +9,8 @@ let config = {
   ceiling: 28, // PX from ceiling
   sand: 100, // Sand Particles
   waves: 100, // Wave points
+  width: 1920, // Canvas width
+  height: 1080, //Canvas height
 };
 
 // Object Containers
@@ -21,21 +23,20 @@ let times = new Array();
 let fps;
 // Import required classes
 import aquarium from "./classes/aquarium.js";
-import fish from "./classes/fish.js";
+import fish from "./classes/new_fish.js";
 import sand from "./classes/sand.js";
 // Create Default classes;
 const Aquarium = new aquarium();
 // Utility Functions
-function ResizeCanvas() {
-  ctx.canvas.width = window.innerWidth;
-  ctx.canvas.height = window.innerHeight;
+function GenerateCanvas() {
+  ctx.canvas.width = 1920;
+  ctx.canvas.height = 1080;
   ctx.font = "30px Arial";
   ctx.fillText(ctx.canvas.width, 10, 50);
   ctx.fillText(ctx.canvas.height, 10, 100);
   grains = new Array();
   initSand();
 }
-window.onresize = ResizeCanvas;
 // Game Functions
 function refreshLoop() {
   window.requestAnimationFrame(function () {
@@ -104,7 +105,7 @@ function InitializeObjects() {
 function Start() {
   //Utility
   SocketConfig();
-  ResizeCanvas();
+  GenerateCanvas();
   // Drawing
   InitializeObjects();
   // Go

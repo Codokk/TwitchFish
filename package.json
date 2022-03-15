@@ -1,10 +1,27 @@
 {
+  "name": "TwitchFish",
+  "version": "2.0.0",
+  "author": "Cody Krist",
+  "main": "main.js",
+  "build": {
+    "appId": "com.techeron.fish",
+    "mac": {
+      "category": "public.app-category.games"
+    }
+  },
+  "scripts": {
+    "start": "electron ./main.js",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "devDependencies": {
+    "electron": "^17.1.2",
+    "electron-builder": "^22.14.13"
+  },
   "dependencies": {
     "express": "^4.17.3",
-    "fastify": "^3.27.2",
-    "fastify-cors": "^6.0.3",
-    "fastify-socket.io": "^3.0.0",
     "socket.io": "^4.4.1",
+    "sqlite3": "^5.0.2",
     "tmi.js": "^1.8.5"
   }
 }
