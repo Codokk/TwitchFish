@@ -1,26 +1,55 @@
 // Require the framework and instantiate it
-const fastify = require('fastify')({ logger: true });
+const express = require('express');
+const app = express();
 const fs = require('fs');
-const io = require('socket.io');
+const http = require('http');
+const tmi = require('tmi.js');
 const Path = require('path');
-// Declare a route
-fastify.get('/', async (req, res) => {
-    res.type('text/html').send(fs.createReadStream(Path.join(__dirname + "/src/index.html")))
+const { Server } = require("socket.io");
+const io = new Server(http.createServer(app));
+io.on('connection', (socket) => {
+  console.log('a user connected');
 });
-fastify.get("app.js", (req,res)=>{
-  res.type('text/javascript').send(fs.createReadStream(Path.join(__dirname + "/src/app.js")))
+// Fucking Cors
+let ALLOWED_ORIGINS = ["http://localhost:4000", "http://localhost:3000", "http://localhost"];
+app.use((req, res, next) => {
+    let origin = req.headers.origin;
+    let theOrigin = (ALLOWED_ORIGINS.indexOf(origin) >= 0) ? origin : ALLOWED_ORIGINS[0];
+    res.header("Access-Control-Allow-Origin", theOrigin);
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
 })
-fastify.get("/classes/*", (req,res)=>{
-  res.type('text/javascript').send(fs.createReadStream(Path.join(__dirname + "/src" + req.url)))
-})
+// Declare routes
+app.use("/", express.static(Path.join(__dirname, "src")));
+// Twitch Connection
+const ttv = new tmi.Client({
+	options: { debug: true },
+	identity: {
+		username: 'TheIntegrator',
+		password: 'oauth:rwd1gfhirky7yfd439f1hv6si467c8'
+	},
+	channels: [ 'techerongames' ]
+});
 
-// Run the server!
+ttv.connect();
+
+ttv.on('message', (channel, tags, message, self) => {
+	// "Alca: Hello, World!"
+	console.log(`${tags['display-name']}: ${message}`);
+});
+			
+// SocketIO Connection
+
+// Run the default server!
 const start = async () => {
   try {
-    await fastify.listen(3000)
+    await app.listen(3000)
   } catch (err) {
     fastify.log.error(err)
-    process.exit(1)
+    app.exit(1)
   }
 }
+// Run the socket server!
+
+
 start()
